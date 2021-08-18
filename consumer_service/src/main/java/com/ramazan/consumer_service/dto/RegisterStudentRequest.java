@@ -10,14 +10,10 @@ import java.io.Serializable;
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = RegisterStudentRequest.class)
 public class RegisterStudentRequest implements Serializable{
     private String id;
-    private String name;
-    private int grade;
     private String classId;
 
-    public RegisterStudentRequest(String id, String name, int grade, String classId) {
+    public RegisterStudentRequest(String id, String classId) {
         this.id = id;
-        this.name = name;
-        this.grade = grade;
         this.classId = classId;
     }
 
@@ -40,28 +36,10 @@ public class RegisterStudentRequest implements Serializable{
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getGrade() {
-        return grade;
-    }
-
-    public void setGrade(int grade) {
-        this.grade = grade;
-    }
-
     @Override
     public String toString() {
         return "RegisterStudentRequest{" +
                 "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", grade=" + grade +
                 ", classId='" + classId + '\'' +
                 '}';
     }
