@@ -58,8 +58,6 @@ public class StudentController {
     //rabbitmq
     @PostMapping("/register/{classId}")
     public String registerStudent(@RequestBody RegisterStudentRequest registerStudentRequest) {
-        //TODO
-        //RegisterStudentRequest should only get student id and class id
         System.out.println(registerStudentRequest.toString());
         rabbitMQSender.send(registerStudentRequest);
         return message;
