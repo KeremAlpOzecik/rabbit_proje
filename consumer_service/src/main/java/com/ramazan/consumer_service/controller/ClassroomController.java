@@ -1,5 +1,6 @@
 package com.ramazan.consumer_service.controller;
 
+import com.ramazan.consumer_service.dto.StudentInformation;
 import com.ramazan.consumer_service.model.Classroom;
 import com.ramazan.consumer_service.service.ClassroomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,37 +16,41 @@ public class ClassroomController {
     private final ClassroomService classroomService;
 
     @Autowired
-    public ClassroomController(ClassroomService classroomService){
+    public ClassroomController(ClassroomService classroomService) {
         this.classroomService = classroomService;
     }
 
     @PostMapping("/")
-    public Classroom addClassroom(@RequestBody Classroom classroom){
+    public Classroom addClassroom(@RequestBody Classroom classroom) {
         return classroomService.saveClassroom(classroom);
     }
 
     @GetMapping("/{id}")
-    public Classroom getClassroom(@PathVariable String id){
+    public Classroom getClassroom(@PathVariable String id) {
         return classroomService.findClassroomById(id);
     }
 
     @GetMapping("/getAll")
-    public List<Classroom> getAllClassrooms(){
+    public List<Classroom> getAllClassrooms() {
         return classroomService.findAll();
     }
 
     @PutMapping("/updateClassroom/{id}")
     public Classroom updateClassroom(@PathVariable String id,
-                                    @RequestBody Classroom classroom){
+                                     @RequestBody Classroom classroom) {
         return classroomService.update(id, classroom);
     }
 
     @DeleteMapping("/deleteClassroom/{id}")
-    public String deleteClassroom(@PathVariable String id){
+    public String deleteClassroom(@PathVariable String id) {
         classroomService.deleteClassroom(id);
         return "Classroom Deleted!";
     }
 
+    @GetMapping("/getStudentInformations/{id}")
+    public List<StudentInformation> getStudentInformation(@PathVariable String id) {
+        return classroomService.getStudentInformation(id);
+    }
 
 
 }
