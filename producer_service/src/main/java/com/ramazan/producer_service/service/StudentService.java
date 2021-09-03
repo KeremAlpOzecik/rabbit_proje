@@ -1,10 +1,13 @@
 package com.ramazan.producer_service.service;
 
+import com.ramazan.producer_service.dto.Classroom;
 import com.ramazan.producer_service.model.Student;
 import com.ramazan.producer_service.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +16,9 @@ import java.util.Optional;
 public class StudentService {
 
     private StudentRepository studentRepository;
+    RestTemplate restTemplate = new RestTemplate();
+    String classRoomServiceURL = "http://localhost:8080/api/v1/classroom/";
+
 
     @Autowired
     public StudentService(StudentRepository studentRepository) {
@@ -52,4 +58,15 @@ public class StudentService {
         student.addClassToAStudent(classId);
         studentRepository.save(student);
     }
+
+    public List<Classroom> getStudentsClasses(String id) {
+        Student student = findById(id);
+        List<Classroom> temp = new ArrayList<>();
+        for (String classId : student.getClassList()){
+            Classroom classroom = restTemplate.getForObject(classRoomServiceURL + classId, Classroom.class);
+            temp.add(classroom);
+        }
+        return temp;
+    }
+
 }

@@ -1,13 +1,17 @@
 package com.ramazan.consumer_service.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.transaction.annotation.Propagation;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
-public class Classroom {
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = Classroom.class)
+public class Classroom implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;

@@ -1,5 +1,6 @@
 package com.ramazan.producer_service.controller;
 
+import com.ramazan.producer_service.dto.Classroom;
 import com.ramazan.producer_service.dto.RegisterStudentRequest;
 import com.ramazan.producer_service.model.Student;
 import com.ramazan.producer_service.service.RabbitMQSender;
@@ -7,6 +8,7 @@ import com.ramazan.producer_service.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -63,4 +65,10 @@ public class StudentController {
         rabbitMQSender.send(registerStudentRequest);
         return message;
     }
+
+    @GetMapping("/getStudentsClasses/{id}")
+    public List<Classroom> getStudentsClasses(@PathVariable String id){
+        return studentService.getStudentsClasses(id);
+    }
+
 }
