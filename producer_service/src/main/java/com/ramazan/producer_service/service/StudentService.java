@@ -46,4 +46,10 @@ public class StudentService {
     public void deleteStudentById(String id) {
         studentRepository.deleteById(id);
     }
+
+    public void addClassToStudent(String studentId, String classId) {
+        Student student = findById(studentId);
+        student.addClassToAStudent(classId);
+        studentRepository.save(student);
+    }
 }

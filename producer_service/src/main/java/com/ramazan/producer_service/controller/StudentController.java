@@ -56,9 +56,10 @@ public class StudentController {
     }
 
     //rabbitmq
-    @PostMapping("/register/{classId}")
+    @PostMapping("/register")
     public String registerStudent(@RequestBody RegisterStudentRequest registerStudentRequest) {
         System.out.println(registerStudentRequest.toString());
+        studentService.addClassToStudent(registerStudentRequest.getId(),registerStudentRequest.getClassId());
         rabbitMQSender.send(registerStudentRequest);
         return message;
     }

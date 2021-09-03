@@ -3,11 +3,9 @@ package com.ramazan.producer_service.model;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = Student.class)
@@ -19,10 +17,26 @@ public class Student implements Serializable {
     private String name;
     private int grade;
 
-    public Student(String id, String name, int grade) {
+    @ElementCollection
+    private List<String> classList;
+
+    public Student(String id, String name, int grade, List<String> classList) {
         this.id = id;
         this.name = name;
         this.grade = grade;
+        this.classList = classList;
+    }
+
+    public void addClassToAStudent(String classId){
+        classList.add(classId);
+    }
+
+    public List<String> getClassList() {
+        return classList;
+    }
+
+    public void setClassList(List<String> classList) {
+        this.classList = classList;
     }
 
     public Student() {

@@ -1,6 +1,9 @@
 package com.ramazan.consumer_service.model;
 
+import org.springframework.transaction.annotation.Propagation;
+
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Entity
@@ -9,12 +12,18 @@ public class Classroom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     private String name;
-    private String studentId;
+    //private String studentId;
 
-    public Classroom(String id, String name, String studentId){
+    @ElementCollection // 1
+    private List<String> studentList;
+    //TODO
+    //OneToMany Student
+    //Create Student Model -> ManyToMany Classroom
+
+    public Classroom(String id, String name, List<String> studentList){
         this.id = id;
         this.name = name;
-        this.studentId = studentId;
+        this.studentList = studentList;
     }
 
     public Classroom() {
@@ -36,12 +45,16 @@ public class Classroom {
         this.name = name;
     }
 
-    public String getStudentId() {
-        return studentId;
+    public List<String> getStudentList() {
+        return studentList;
     }
 
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
+    public void setStudentList(List<String> studentList) {
+        this.studentList = studentList;
+    }
+
+    public void addStudentToList(String id){
+        studentList.add(id);
     }
 }
 
